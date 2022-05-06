@@ -99,6 +99,7 @@ public class JavaPrograms {
         System.out.println(strarray.length);
     }
 
+
     @Test(description = "Count the number of DUPLICATE / repeated words in a string using HashMap")
     public void test6() {
         String str = "My My Name Name is is sudhansu ricky patro";
@@ -121,6 +122,7 @@ public class JavaPrograms {
         System.out.println(map);
 
     }
+
 
     @Test(description = "find whether a number is prime or not")
     public void test7() {
@@ -354,23 +356,31 @@ public class JavaPrograms {
         }
     }
 
-    @Test(description = "printing fibonacci pattern")
+    @Test(description = "printing fibonacci pattern using recursion")
     public void test20() {
         //    0  1 1 2 3 5 8 13 21
 
-        int a = 0;
-        int b = 1;
-        int i = 1;
-        int sum = 0;
-        while (i <= 8) {
-            sum = a + b;
-            a = b;
-            b = sum;
+        int n1 = 0;
+        int n2 = 1;
+        int n3 = 0;
+        int count = 5;
 
-            System.out.println(sum);
-            i++;
+        System.out.println(n1 + "\n" + n2);
+        printfibonaci(n1, n2, n3, count);
+
+    }
+
+    public void printfibonaci(int n1, int n2, int n3, int count) {
+
+        if (count > 0) {
+            n3 = n1 + n2;
+            n1 = n2;
+            n2 = n3;
+            System.out.println(n3);
+            printfibonaci(n1, n2, n3, count - 1);
         }
     }
+
 
     @Test(description = "Distance between two characters in a string")
     public void test21() {
@@ -707,12 +717,114 @@ public class JavaPrograms {
 
     }
 
-    @Test(description = "")
+    @Test(description = "find the repeated / duplicate characters in a string")
     public void test39() {
+        String string1 = "regression";
+        int count;
+
+        //Converts given string into character array
+        char[] string = string1.toCharArray();
+
+        //Counts each character present in the string
+        for (int i = 0; i < string.length; i++) {
+            count = 1;
+            for (int j = i + 1; j < string.length; j++) {
+                if (string[i] == string[j]) {
+                    count++;
+                    //Set string[j] to 0 to avoid printing visited character
+                    string[j] = '0';
+                }
+            }
+            //A character is considered as duplicate if count is greater than 1
+            if (count > 1 && string[i] != '0')
+                System.out.println(string[i]);
+        }
+    }
+
+    @Test(description = "sort integer array in ascending order ")
+    public void test40() {
+        int[] array = {20, 10, 25, 12, 36};
+        Arrays.sort(array);
+        System.out.println(Arrays.toString(array));
+    }
+
+    @Test(description = "sort integer array in descending order ")
+    public void test41() {
+        Integer[] array = {20, 10, 25, 12, 36};
+        Arrays.sort(array, Collections.reverseOrder());
+        System.out.println(Arrays.toString(array));
     }
 
 
-}
+    @Test(description = "iterate over hashmap and print key , values ")
+    public void test42() {
+        LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
+        map.put("sp1", 100);
+        map.put("sp2", 200);
+        map.put("sp3", 300);
+        map.put("sp4", 400);
+
+        for (Map.Entry m : map.entrySet()) {
+            System.out.println(m.getKey() + " - " + m.getValue());
+        }
+    }
+
+    @Test(description = "convert list to array ")
+    public void test43() {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        arrayList.add("sp1");
+        arrayList.add("sp2");
+        arrayList.add("sp3");
+
+        System.out.println(arrayList);
+
+        String[] myArray = new String[arrayList.size()];
+
+        arrayList.toArray(myArray);
+
+        for (String m : myArray
+        ) {
+            System.out.println(m);
+
+        }
+    }
+
+    @Test(description = "find a string in another string")
+    public void test44(){
+
+        String str = "This is my world";
+        String searchString ="This";
+        boolean flag = false;
+        String[] strlist = str.split(" ");
+        for (String item: strlist) {
+            if(item.equalsIgnoreCase(searchString)){
+                flag = true;
+            }
+        }
+        if(flag){
+            System.out.println(searchString + " - is present in - " + str);
+        }
+        else{
+            System.out.println(searchString + " - is not present in  - " + str);
+        }
+    }
+    @Test(description = "find missing numbers")
+    public void test45() {
+
+        int[] arr1 = {1,2,5,7,4,3};
+
+        int numberOfElements = arr1.length+1;
+        int sumTotal = (numberOfElements*(numberOfElements+1))/2; //n*n+1/2
+        int sum =0;
+        for (int i=0;i<arr1.length;i++){
+            sum=sum+arr1[i];
+        }
+
+        int missingNumber =sumTotal-sum;
+        System.out.println("The missing number is "+missingNumber);
+        }
+    }
+
 
 
 
