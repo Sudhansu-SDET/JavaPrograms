@@ -2,6 +2,7 @@ package practiceprograms;
 
 import org.testng.annotations.Test;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class JavaPrograms {
@@ -790,40 +791,409 @@ public class JavaPrograms {
     }
 
     @Test(description = "find a string in another string")
-    public void test44(){
+    public void test44() {
 
         String str = "This is my world";
-        String searchString ="This";
+        String searchString = "This";
         boolean flag = false;
         String[] strlist = str.split(" ");
-        for (String item: strlist) {
-            if(item.equalsIgnoreCase(searchString)){
+        for (String item : strlist) {
+            if (item.equalsIgnoreCase(searchString)) {
                 flag = true;
             }
         }
-        if(flag){
+        if (flag) {
             System.out.println(searchString + " - is present in - " + str);
-        }
-        else{
+        } else {
             System.out.println(searchString + " - is not present in  - " + str);
         }
     }
+
     @Test(description = "find missing numbers")
     public void test45() {
 
-        int[] arr1 = {1,2,5,7,4,3};
+        int[] arr1 = {1, 2, 5, 7, 4, 3};
 
-        int numberOfElements = arr1.length+1;
-        int sumTotal = (numberOfElements*(numberOfElements+1))/2; //n*n+1/2
-        int sum =0;
-        for (int i=0;i<arr1.length;i++){
-            sum=sum+arr1[i];
+        int numberOfElements = arr1.length + 1;
+        int sumTotal = (numberOfElements * (numberOfElements + 1)) / 2; //n*n+1/2
+        int sum = 0;
+        for (int i = 0; i < arr1.length; i++) {
+            sum = sum + arr1[i];
         }
 
-        int missingNumber =sumTotal-sum;
-        System.out.println("The missing number is "+missingNumber);
+        int missingNumber = sumTotal - sum;
+        System.out.println("The missing number is " + missingNumber);
+    }
+
+    @Test(description = "find duplicates in an integer array ")
+    public void test46() {
+        int[] arr = {1, 2, 3, 4, 5, 5, 3, 4, 6, 7, 8};
+        ArrayList<Integer> arrayList = new ArrayList<Integer>();
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] == arr[j]) {
+                    arrayList.add(arr[i]);
+                }
+            }
+        }
+        System.out.println(arrayList);
+
+    }
+
+    @Test(description = "Give Indexes of array elements which has sum=10 ")
+    public void test47() {
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if ((arr[i] + arr[j]) == 10) {
+                    System.out.println("i is " + arr[i] + " , j is " + arr[j]);
+                }
+            }
         }
     }
+
+    @Test(description = "Arrange it in increasing length order of words. i.e “is new This”")
+    public void test48() {
+        String str = "This is new";
+        String[] stringList = str.split(" ");
+        ArrayList<String> sortedString = new ArrayList<String>();
+        for (int i = 0; i < stringList.length; i++) {
+            for (int j = i + 1; j < stringList.length; j++) {
+
+                if (stringList[i].length() < stringList[j].length()) {
+                    sortedString.add(stringList[i]);
+                }
+            }
+        }
+
+        System.out.println(sortedString);
+    }
+
+    @Test(description = "find largest element in an array")
+    public void test49() {
+        int[] arr = {22, 9, 1, 25, 99, 45, 87, 100};
+        int largestElement = arr[0];
+
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > largestElement) {
+                largestElement = arr[i];
+            }
+        }
+        System.out.println(largestElement);
+
+    }
+
+    @Test(description = "find largest element in a range in an array")
+    public void test50() {
+        int[] arr = {22, 9, 1, 25, 99, 45, 87, 34, 6, 8, 111, 223, 98};
+
+        int min = 0;
+        int max = 2;
+
+        int largestElement = arr[min];
+
+        for (int i = min; i < max; i++) {
+            if (arr[i] > largestElement) {
+                largestElement = arr[i];
+            }
+        }
+        System.out.println(largestElement);
+
+    }
+
+    @Test(description = "reverse elements in an array")
+    public void test51() {
+        int[] arr = {22, 9, 1, 25, 99};
+
+        int min = 0;
+        int max = arr.length - 1;
+        int temp;
+        for (int i = min; i < max; i++) {
+
+            while (min < max) {
+                temp = arr[min];
+                arr[min] = arr[max];
+                arr[max] = temp;
+
+                min++;
+                max--;
+            }
+        }
+        System.out.println(Arrays.toString(arr));
+
+    }
+
+    @Test(description = "find if element present in array")
+    public void test52() {
+
+        int[] arr = {4, 7, 2, 1, 4, 9, 32};
+        int checkValue = 333;
+        boolean flag = false;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == checkValue) {
+                System.out.println("Index value is " + i);
+                flag = true;
+                break;
+            }
+        }
+        if (!flag) {
+            System.out.println("The element " + checkValue + " is not present in array");
+        }
+    }
+
+    @Test(description = "find if element present in array within a range")
+    public void test53() {
+
+        int[] arr = {4, 7, 2, 1, 4, 9, 32};
+        int checkValue = 99;
+        boolean flag = false;
+        int startIndex = 2;
+        int endIndex = 5;
+        for (int i = startIndex; i < endIndex; i++) {
+            if (arr[i] == checkValue) {
+                System.out.println("Value found at Index " + i);
+                flag = true;
+                break;
+            }
+        }
+        if (!flag) {
+            System.out.println("The element " + checkValue + " is not present in array within the range");
+        }
+    }
+
+
+    @Test(description = "find if element present in 2D array")
+    public void test54() {
+
+        int[][] arr = {{4, 7, 2, 1},
+                {9, 8, 5}};
+        int checkValue = 1;
+        boolean flag = false;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (arr[i][j] == checkValue) {
+                    System.out.println("Index value is at " + "Row : " + i + " , Column : " + j);
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        if (!flag) {
+            System.out.println("The element " + checkValue + " is not present in 2D array");
+        }
+    }
+
+    @Test(description = "find maximum value in 2D array")
+    public void test55() {
+
+        int[][] arr = {{4, 7, 2, 1},
+                {9, 88, 5}};
+        int maxValue = arr[0][0];
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (arr[i][j] > maxValue) {
+                    maxValue = arr[i][j];
+                }
+            }
+        }
+        System.out.println("Maximum value in 2D array is " + maxValue);
+
+    }
+
+    //Approach 1
+    @Test(description = "https://leetcode.com/problems/find-numbers-with-even-number-of-digits")
+    public void test56() {
+
+        int[] nums = {11, 34, 2, 6, 7895};
+        int count = 0;
+        for (int item : nums) {
+            int length = Integer.toString(item).length();
+            System.out.println(length);
+            if (length % 2 == 0) {
+                count++;
+                System.out.println(item);
+            }
+        }
+        System.out.println("The count is " + count);
+    }
+
+
+    //Approach 2
+    @Test(description = "https://leetcode.com/problems/find-numbers-with-even-number-of-digits")
+    public void test57() {
+
+        int[] nums = {11, 34, 2, 6, 7895};
+        int count = 0;
+        for (int item : nums) {
+            int length = numberOfDigits(item);
+            if (length % 2 == 0) {
+                count++;
+                System.out.println(item);
+            }
+        }
+        System.out.println("The count is " + count);
+    }
+
+    private int numberOfDigits(int item) {
+        int number=0;
+        while(item>0){
+            number++;
+            item=item/10;
+        }
+        return number;
+    }
+
+    //Approach1
+    @Test(description = "https://leetcode.com/problems/richest-customer-wealth/")
+    public void test58() {
+
+        int[][] accounts = {{1, 5, 9 , 3},
+                {7, 3, 90},
+                {3}};
+        int maximumWealth = 0;
+        for (int[] arr: accounts) {
+            int sum=0;
+            for (int element : arr) {
+                sum = sum + element;
+            }
+            if(sum>maximumWealth) {
+                maximumWealth = sum;
+            }
+        }
+        System.out.println("The largest wealth is " + maximumWealth);
+
+
+
+    }
+
+    @Test(description = "search for target element in binary search in ascending order sorted array")
+    public void test59() {
+
+        int[] arr = {-15,-10,-3,1, 2, 13, 17, 22, 38, 45, 57, 60};
+
+        int targetValue = 45;
+        int foundAt = binarySearch(arr,targetValue);
+        if(foundAt==-1){
+            System.out.println(targetValue+" is not present in the array ");
+        }else
+        System.out.println(targetValue+" is present in the array at index "+foundAt);
+
+    }
+
+    public int binarySearch(int[] arr,int targetValue) {
+        int startIndex = 0;
+        int endIndex = arr.length - 1;
+        while (startIndex <= endIndex) {
+            int midIndex = startIndex + (endIndex - startIndex) / 2;
+
+            if (targetValue < arr[midIndex]) {
+                endIndex = midIndex - 1;
+            } else if (targetValue > arr[midIndex]) {
+                startIndex = midIndex + 1;
+            } else {
+                return midIndex;
+            }
+        }
+        return -1;
+    }
+
+    @Test(description = "search for target element in binary search in descending order sorted array")
+    public void test60() {
+
+        int[] arr = {60, 55, 43 , 37 , 21 , 11 , 9 , 3};
+
+        int targetValue = 21;
+        int foundAt = binarySearchDesc(arr,targetValue);
+        if(foundAt==-1){
+            System.out.println(targetValue+" is not present in the array ");
+        }else
+            System.out.println(targetValue+" is present in the array at index "+foundAt);
+
+    }
+
+    public int binarySearchDesc(int[] arr,int targetValue) {
+        int startIndex = 0;
+        int endIndex = arr.length - 1;
+        while (startIndex <= endIndex) {
+            int midIndex = startIndex + (endIndex - startIndex) / 2;
+
+            if (targetValue > arr[midIndex]) {
+                endIndex = midIndex - 1;
+            } else if (targetValue < arr[midIndex]) {
+                startIndex = midIndex + 1;
+            } else {
+                return midIndex;
+            }
+        }
+        return -1;
+    }
+
+    @Test(description = "https://leetcode.com/problems/search-insert-position/discuss/1456649/simplest-java-solution-searching-ceiling-index-using-binary-search-100-faster")
+    //ceiling of a number means the smallest element in a array , that is greater than or equal to the given number
+    public void test61() {
+
+        int[] arr = {1,12 ,23 ,44 , 57 , 69, 73, 88};
+
+        int targetValue =85;
+        int ceilingValue = binarySearch1(arr,targetValue);
+
+        System.out.println("The ceiling value of "+ targetValue + " is " + ceilingValue);
+
+    }
+    public int binarySearch1(int[] arr,int targetValue) {
+        int startIndex = 0;
+        int endIndex = arr.length - 1;
+        while (startIndex <= endIndex) {
+            int midIndex = startIndex + (endIndex - startIndex) / 2;
+
+            if(targetValue==arr[midIndex]){
+                return arr[midIndex];
+            }else if(targetValue<arr[midIndex]){
+                endIndex=midIndex-1;
+            }else{
+                startIndex=midIndex+1;
+            }
+        }
+        return arr[startIndex];
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
 
 
 

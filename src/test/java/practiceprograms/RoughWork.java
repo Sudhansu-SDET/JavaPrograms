@@ -1,13 +1,11 @@
 package practiceprograms;
 
 import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 public class RoughWork {
 
@@ -83,8 +81,9 @@ public class RoughWork {
         }
     }
 
-    @Test(description = "find the repeated characters in a string")
-    public void test6() throws InterruptedException {
-      Thread.sleep(5000);
+    @Parameters("browser")
+    @Test()
+    public void test6(String key) throws InterruptedException {
+        System.out.println(key);
     }
 }
