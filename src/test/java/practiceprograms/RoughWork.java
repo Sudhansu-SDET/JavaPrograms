@@ -1,18 +1,21 @@
 package practiceprograms;
 
+import com.sun.deploy.security.SelectableSecurityManager;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Array;
 import java.util.*;
 
 public class RoughWork {
 
 
-
     @Test
     public void func1(){
+
         String str = "aaaaabbcccd";
         char[] strarray = str.toCharArray();
         int count=1;
@@ -86,4 +89,29 @@ public class RoughWork {
     public void test6(String key) throws InterruptedException {
         System.out.println(key);
     }
+
+    @Test()
+    public void test7(){
+      String str ="123AB456CD";
+      String charac ="";
+      String digit ="";
+      for(int i=0;i<str.length();i++){
+          if(Character.isLetter(str.charAt(i))){
+          charac=charac+str.charAt(i);}
+          else{
+              digit=digit+str.charAt(i);
+          }
+      }
+        System.out.println(charac);
+        System.out.println(digit);
+    }
+
+    @Test()
+    public void test8() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Absclass abs = new Absclass();
+        Method method = Absclass.class.getDeclaredMethod("private_method");
+        method.setAccessible(true);
+        method.invoke(abs);
+    }
+
 }

@@ -2,7 +2,8 @@ package practiceprograms;
 
 import org.testng.annotations.Test;
 
-import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 public class JavaPrograms {
@@ -1135,15 +1136,21 @@ public class JavaPrograms {
 
         int[] arr = {1,12 ,23 ,44 , 57 , 69, 73, 88};
 
-        int targetValue =85;
+        int targetValue =89;
         int ceilingValue = binarySearch1(arr,targetValue);
-
-        System.out.println("The ceiling value of "+ targetValue + " is " + ceilingValue);
-
+        if(ceilingValue==-1){
+            System.out.println("Ceiling value for "+targetValue+" cannot be found as it is greater than the greatest element in the array");
+        }else {
+            System.out.println("The ceiling value of " + targetValue + " is " + ceilingValue);
+        }
     }
     public int binarySearch1(int[] arr,int targetValue) {
+
         int startIndex = 0;
         int endIndex = arr.length - 1;
+        if (targetValue>arr[endIndex]){
+            return -1;
+        }
         while (startIndex <= endIndex) {
             int midIndex = startIndex + (endIndex - startIndex) / 2;
 
@@ -1158,12 +1165,300 @@ public class JavaPrograms {
         return arr[startIndex];
     }
 
+    @Test(description = "find floor of a number in array")
+    // . floor means the largest number in array which is less than or equal to target value
+
+    public void test62() {
+
+        int[] arr = {1,9,12,24,33,45,55};
+        int targetValue =-1;
+        int floorValue = binarySearch2(arr,targetValue);
+        if(floorValue==-1){
+            System.out.println("Floor value for "+targetValue+" cannot be found as it is less than the smallest element in the array");
+        }else {
+            System.out.println("The floor value of "+ targetValue + " is " + floorValue);
+        }
+
+
+    }
+    public int binarySearch2(int[] arr,int targetValue) {
+        int startIndex = 0;
+        int endIndex = arr.length - 1;
+        if (targetValue<arr[startIndex]){
+            return -1;
+        }
+        while (startIndex <= endIndex) {
+            int midIndex = startIndex + (endIndex - startIndex) / 2;
+
+            if(targetValue==arr[midIndex]){
+                return arr[midIndex];
+            }else if(targetValue<arr[midIndex]){
+                endIndex=midIndex-1;
+            }else{
+                startIndex=midIndex+1;
+            }
+        }
+        return arr[endIndex];
+    }
+
+
+    @Test(description = "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/")
+
+    public void test63() {
+        int[] arr = {5,7,7,7,7,8,8,10};
+        int targetValue = 11;
+        int[] indexResult = {-1,-1};
+        indexResult[0] = binarySearch3(arr,targetValue,true);
+        if(indexResult[0]!=-1){
+            indexResult[1] = binarySearch3(arr,targetValue,false);
+        }
+        System.out.println(indexResult);
+
+    }
+
+    public int binarySearch3(int[] arr,int targetValue,boolean findStartValue) {
+        int startIndex = 0;
+        int endIndex = arr.length - 1;
+        int ans =-1;
+
+        while (startIndex <= endIndex) {
+            int midIndex = startIndex + (endIndex - startIndex) / 2;
+            if(targetValue<arr[midIndex]){
+                endIndex=midIndex-1;
+            }else if(targetValue>arr[midIndex]){
+                startIndex=midIndex+1;
+            }else
+            {
+               //potential answer is found
+                ans=midIndex;
+                if(findStartValue){
+                endIndex=midIndex-1;}
+                else
+                {
+                    startIndex=midIndex+1;
+                }
+            }
+        }
+        return ans;
+    }
 
 
 
+    @Test(description = "https://leetcode.com/problems/find-smallest-letter-greater-than-target/")
+    //similar to ceiling of a number questions
+    public void test64() {
+
+        char[] arr = {'c','f','j'};
+        char targetValue ='q';
+
+        char smallestLetter = binarySearch4(arr,targetValue);
+
+            System.out.println("The smallest letter greater than target-" + targetValue + " is " + smallestLetter);
+        }
+
+
+    public char binarySearch4(char[] arr,int targetValue) {
+
+        int startIndex = 0;
+        int endIndex = arr.length - 1;
+
+        while (startIndex <= endIndex) {
+            int midIndex = startIndex + (endIndex - startIndex) / 2;
+
+            if(targetValue<arr[midIndex]){
+                endIndex=midIndex-1;
+            }else{
+                startIndex=midIndex+1;
+            }
+        }
+        return arr[startIndex%arr.length];
+    }
+
+    @Test(description = "https://www.geeksforgeeks.org/find-position-element-sorted-array-infinite-numbers/")
+    public void test65() {
+
+        int[] arr = {3, 5, 7, 9, 10, 90, 100, 130, 140, 160, 170};
+        int targetValue = 10;
+        int position = findPosition(arr,targetValue);
+        System.out.println("The target "+ targetValue+" is found in the sub array at index: "+ position );
+    }
+
+    public int findPosition(int[] arr, int targetValue ){
+        //start search with box of 2 elements
+        int start =0;
+        int end = 1;
+
+        while(targetValue > arr[end]){ // condition for the target to lie in the range
+            int temp = end+1;
+            end = end +(end-start+1)*2; // end = previous end + size of box*2
+            start=temp;
+        }
+        int foundAt = binarySearch5(arr,targetValue,start,end);
+        return foundAt;
+    }
+
+    public int binarySearch5(int[] arr,int targetValue, int startIndex, int endIndex) {
+
+        while (startIndex <= endIndex) {
+            int midIndex = startIndex + (endIndex - startIndex) / 2;
+
+            if(targetValue<arr[midIndex]){
+                endIndex=midIndex-1;
+            }else if (targetValue>arr[midIndex]){
+                startIndex=midIndex+1;
+            }else{
+                return midIndex;
+            }
+        }
+        return startIndex;
+    }
 
 
 
+    @Test(description = "https://leetcode.com/problems/peak-index-in-a-mountain-array/")
+    public void test66() {
+
+        int[] arr = {1,2,3,4,5,6,5,4,3,2};
+        int position = peakIndexInMountainArray(arr);
+        System.out.println("The peak of the mountain is at index : "+ position+ " and the value is "+ arr[position] );
+    }
+
+    public int peakIndexInMountainArray(int[] arr) {
+        int start =0;
+        int end =  arr.length-1;
+
+        while(start<end){
+            int mid = start + (end - start) / 2;
+            if(arr[mid]>arr[mid+1]) // you are in decreasing part of the array, this maybe the answer but continue searching in the left
+            { end =mid;
+            }
+            else{ // you are in ascending part of the array, this maybe the answer but continue searching in the right
+                start=mid+1;
+            }
+            //In the end , start will be == end and pointing to the largest number bcz of the two checks above
+            //start and end are always tring to find max element in the above two check at the time
+            // hence when they are pointing to 1 element , that is the maximum element i.e. peak of the mountain
+        }
+        return start;// you can return end also , as start == end at this time
+    }
+
+
+    @Test(description = "https://leetcode.com/problems/find-in-mountain-array/")
+    public void test67() {
+
+        int[] arr = {1,2,3,4,5,3,1};
+        int target=1;
+        int position = findInMountainArray(arr,target);
+        System.out.println("The first occurance of the element is at index : "+ position );
+    }
+
+    public int findInMountainArray(int[] arr,int target ) {
+        int peak = peakIndexInMountainArray(arr);
+        int firstTry = orderAgnosticBinarySearch(arr,target,0,peak);
+        int secondTry = orderAgnosticBinarySearch(arr,target,peak+1,arr.length-1);
+        if(firstTry!=-1){
+            return firstTry;
+        }
+        else{
+            return secondTry;
+        }
+    }
+
+    public int orderAgnosticBinarySearch(int[] arr,int target,int start, int end) { // can search in both ascending and descending array
+
+        boolean isAsc =arr[start]<arr[end];//check if asc or desc array
+
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+
+            if(arr[mid]==target){
+                return mid;
+            }
+            if(isAsc) {
+                if (target < arr[mid]) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            }
+            else{
+                    if(target>arr[mid]){
+                        end=mid-1;
+                    }else {
+                        start=mid+1;
+                    }
+                }
+            }return -1;
+        }
+
+
+    @Test(description = "https://leetcode.com/problems/search-in-rotated-sorted-array/")
+    //code needs update - not working fully
+    public void test68() {
+
+        int[] arr = {22,34,56,1,2,5,7,9};
+        int target=5;
+        int position = searchInSortedArray(arr,target);
+        if(position!=-1){
+        System.out.println("The element is found at index : "+ position );}
+        else
+        {
+            System.out.println("The element " +target+" is not found in the array");
+        }
+    }
+
+    public int searchInSortedArray(int[] nums, int target) {
+        int peak = peakIndexInMountainArray(nums);
+        int position = simpleAscBinarySearch(nums,target,0,peak);
+        if(position==-1){
+            position = simpleAscBinarySearch(nums,target,peak+1,nums.length-1);
+        }
+        return position;
+    }
+
+//    private int findPivot(int[] nums) {
+//        int start=0;
+//        int end=nums.length-1;
+//        while (start <= end) {
+//            int mid = start + (end - start) / 2;
+//
+//            if(nums[mid]>nums[mid+1]){
+//                return mid;
+//            }
+//            if (target < arr[mid]) {
+//                end = mid - 1;
+//            } else if(target > arr[mid]){
+//                start = mid + 1;
+//            }
+//        }return -1;
+//    }
+
+    public int simpleAscBinarySearch(int[] arr,int target,int start, int end) {
+        while (start <= end) {
+           int mid = start + (end - start) / 2;
+
+           if (target < arr[mid]) {
+                    end = mid - 1;
+                } else if(target > arr[mid]){
+                    start = mid + 1;
+                }else{
+                    return mid;
+                }
+        }return -1;
+    }
+
+    @Test(description = "can we access private methods of a class in another class . Answer is yes using reflection API as below")
+    public void test69() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Absclass abs = new Absclass();
+        Method method = Absclass.class.getDeclaredMethod("private_method");
+        method.setAccessible(true);
+        method.invoke(abs);
+
+    }
+    @Test(description = "tbd")
+    public void test70() {
+        //tbd
+    }
 
 
 
@@ -1185,6 +1480,25 @@ public class JavaPrograms {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
