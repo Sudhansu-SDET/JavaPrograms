@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
-public class JavaPrograms {
+public class Javaprograms {
 
     public static void printfunc(String[] mystr) {
         for (String item : mystr) {
@@ -38,6 +38,8 @@ public class JavaPrograms {
         System.out.println(sb);
     }
 
+    
+   // <-------------PROGRAMS------------------->
     @Test(description = "Reverse a string to check whether a string is a Palindromen")
     public void test1() {
         String str = "nitin";
@@ -88,7 +90,7 @@ public class JavaPrograms {
                 temp = "";
         for (int i = myCharStr.length - 1; i >= 0; i--) {
             System.out.println(myCharStr[i]);
-            temp = temp + myCharStr[i];
+            temp += myCharStr[i];
         }
         System.out.println(temp);
 
