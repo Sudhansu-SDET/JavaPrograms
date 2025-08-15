@@ -1,4 +1,4 @@
-package practiceprograms;
+package Archieve;
 
 class Absclass {
     String str;
